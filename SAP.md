@@ -19,15 +19,19 @@
 @351 IAM polic还可以限制EC2的启动类型(t3.small) EC2区域(us-east-2 Region)
 -- IAM Permission Boundaries设权限边界
 - IAM Access Analyzer
-- STS 在不同账户间设角色
+- STS(Security Token Service) 在不同账户间设角色 有一些API
+--API1.AssumeRole
 @103(多)开发团队需要用临时凭证sts:AssumeRole访问生产账户。
-@200(多)
 @399 IAM roles for tasks,security groups to the tasks(best practice)
+----API2.AssumeRoleWithSAML API@200
+----API3.AssumeRoleWithWebIdentity
+login with Amazon Cognito,Amazon, Facebook, Google, or any OpenID
+--API4.GetSessionToken
 - Identity Federation & Cognito
 - AWS Directory Services
 - AWS Organizations
+- --OrganizationAccountAccessRole @246 @367@391@480管理账户assume the IAM role，成员账户OrganizationAccountAccessRole IAM role
 --SCP（Service Control Policies）@309(多)@464SCP的作用是限制权限,只能“拒绝”操作。把希望允许的用户排除在SCP之外就可以。
---OrganizationAccountAccessRole @246 @367@391@480管理账户assume the IAM role，成员账户OrganizationAccountAccessRole IAM role
 - AWS Organizations Policies
 - AWS IAM Identity Center
 - AWS Control Tower
