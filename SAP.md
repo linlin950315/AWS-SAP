@@ -40,10 +40,9 @@ Question #101, #103
 login with Amazon Cognito,Amazon, Facebook, Google, or any OpenID
 -- API4.GetSessionToken forMFA
 
-- Identity Federation & Cognito
-  
+- Identity Federation & Cognit
 - AWS Directory Services
-  
+
 - AWS Organizations
 Question #29, #31, #34, #38, #64, #79, #88
 --OrganizationAccountAccessRole @246 @367@391@480管理账户assume the IAM role，成员账户OrganizationAccountAccessRole IAM role
