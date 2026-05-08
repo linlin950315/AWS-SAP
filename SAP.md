@@ -30,11 +30,14 @@ IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像�
 -- 基于 CloudTrail 自动生成最小权限策略IAM策略
 作用是识别权限，风险，暴露情况。题干会用干扰需求匹配这个工具。
 
-- STS(Security Token Service) 在不同账户间设角色 有一些API
-Question #101, #103
--- API1.AssumeRole
+- STS(Security Token Service) 在不同账户间设角色,IAM角色是跨账户访问的推荐方式，符合AWS安全最佳实践。 有一些API
+-- 核心API.AssumeRole 即create an IAM role
+@101在Sales账户中创建一个IAM角色，市场团队的账户中更新QuickSight
 @103(多)开发团队需要用临时凭证sts:AssumeRole访问生产账户。
+@126@149 Amazon Resource Name (ARN)+external ID ; external ID在信任策略中可以防止“混淆代理问题”
 @399 IAM roles for tasks,security groups to the tasks(best practice)
+@185@454@480
+
 -- API2.AssumeRoleWithSAML API@200
 -- API3.AssumeRoleWithWebIdentity
 login with Amazon Cognito,Amazon, Facebook, Google, or any OpenID
