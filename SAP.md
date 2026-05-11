@@ -16,7 +16,7 @@ IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像�
 
 -- IAM Roles vs Resource Based Policies 一个账户扮演多个角色
 @103(多)注意生产账户还是开发账户的设置内容
-开发团队想访问生产账户。生产账户创建IAM policy以允许访问S3。生产账户创建role，赋予刚才的policy，让生产账户信任开发账户。
+开发团队想访问生产账户。生产账户创建IAM policy以允许访问S3，创建role，赋予刚才的policy，让生产账户信任开发账户。
 @309(多)allow an IAM user in Account A to assume a role in Account B即，
 需要允A中的IAM用户来假设B中的角色。
 就要在B配置信任策略允许A操作，A配身份策略sts:AssumeRole
@@ -34,11 +34,12 @@ IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像�
 -- 核心API.AssumeRole 即create an IAM role
 @101在Sales账户中创建一个IAM角色，市场团队的账户中更新QuickSight
 @103(多)开发团队需要用临时凭证sts:AssumeRole访问生产账户。
-@126@149 Amazon Resource Name (ARN)+external ID ; external ID在信任策略中可以防止“混淆代理问题”
+@126@149@480 Amazon Resource Name (ARN)+external ID ; external ID在信任策略中可以防止“混淆代理问题”
 @399 IAM roles for tasks,security groups to the tasks(best practice)
-@185@454@480
+@185@454
 
--- API2.AssumeRoleWithSAML API@200
+-- API2.AssumeRoleWithSAML API@200 正确选项要包含信任策略trust policy；SAML断言(assertions)必须映射用户组或到IAM角色;
+AWS STS的AssumeRoleWithSAML API是实现SAML联合身份认证的关键步骤，必须正确调用此API并传递必要参数。
 -- API3.AssumeRoleWithWebIdentity
 login with Amazon Cognito,Amazon, Facebook, Google, or any OpenID
 -- API4.GetSessionToken forMFA
