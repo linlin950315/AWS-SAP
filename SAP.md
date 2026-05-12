@@ -30,7 +30,7 @@ IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像�
 -- 基于 CloudTrail 自动生成最小权限策略IAM策略
 作用是识别权限，风险，暴露情况。题干会用干扰需求匹配这个工具。
 
-- STS(Security Token Service) 在不同账户间设角色,IAM角色是跨账户访问的推荐方式，符合AWS安全最佳实践。 有一些API
+- Ch5.STS(Security Token Service) 在不同账户间设角色,IAM角色是跨账户访问的推荐方式，符合AWS安全最佳实践。 有一些API
 -- 核心API.AssumeRole 即create an IAM role
 @101在Sales账户中创建一个IAM角色，市场团队的账户中更新QuickSight
 @103(多)开发团队需要用临时凭证sts:AssumeRole访问生产账户。
@@ -38,13 +38,27 @@ IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像�
 @399 IAM roles for tasks,security groups to the tasks(best practice)
 @185@454
 
--- API2.AssumeRoleWithSAML API@200 正确选项要包含信任策略trust policy；SAML断言(assertions)必须映射用户组或到IAM角色;
+-- API2.AssumeRoleWithSAML API
+SAML = 企业内部员工访问 AWS
+@200 正确选项要包含信任策略trust policy；SAML断言(assertions)必须映射用户组或到IAM角色;
 AWS STS的AssumeRoleWithSAML API是实现SAML联合身份认证的关键步骤，必须正确调用此API并传递必要参数。
 -- API3.AssumeRoleWithWebIdentity
 login with Amazon Cognito,Amazon, Facebook, Google, or any OpenID
 -- API4.GetSessionToken forMFA
 
-- Identity Federation & Cognit
+- Ch6.Identity Federation & Cognit
+Federation集中管理企业身份,不创建用户。允许“不在 AWS 账户内创建 IAM 用户”的情况下，让外部用户访问 AWS 资源。
+目前推荐使用 SAML(企业AD集成) 或 Amazon Cognito
+可用方法：SAML企业内部、Amazon Cognito(内部调用 STS,用token，移动App，匿名用户)+
+Custom Identity Broker、OpenID Connect即 OIDC(Google 登录)
+@385 SMAL的Session Tag标签管理身份认证
+@411 外部用户从互联网访问程序。要通过MFA访问部署在容器的docker中。要用Amazon Cognito建用户池。
+@517 用token保护API Gateway和后面的AWS Lambda
+@418 用OIDC(IdP)提供用户管理，JWT Token保护API Gateway HTTP API和ALB。
+但发现ALB接受来自未经身份验证的用户请求。应该integrating the ALB with the IdP集成IdP和ALB。
+@261
+
+
 - AWS Directory Services
 
 - AWS Organizations
