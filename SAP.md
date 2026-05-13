@@ -51,15 +51,18 @@ Federation集中管理企业身份,不创建用户。允许“不在 AWS 账户�
 目前推荐使用 SAML(企业AD集成) 或 Amazon Cognito
 可用方法：SAML企业内部、Amazon Cognito(内部调用 STS,用token，移动App，匿名用户)+
 Custom Identity Broker、OpenID Connect即 OIDC(Google 登录)
-@385 SMAL的Session Tag标签管理身份认证
+@385 一个开发单元的成员终止了属于另一个开发单元的EC2实例。用SAML的Session Tag标签管理身份认证，再更新IAM角色和策略
 @411 外部用户从互联网访问程序。要通过MFA访问部署在容器的docker中。要用Amazon Cognito建用户池。
 @517 用token保护API Gateway和后面的AWS Lambda
-@418 用OIDC(IdP)提供用户管理，JWT Token保护API Gateway HTTP API和ALB。
-但发现ALB接受来自未经身份验证的用户请求。应该integrating the ALB with the IdP集成IdP和ALB。
-@261
+@418 用OIDC(IdP)提供用户管理，JWT Token保护ALB和API Gateway HTTP API。但发现ALB接受来自未经身份验证的用户请求。
+应该配置即存的ALB，integrating the ALB with the IdP集成IdP和ALB。
+@261 创建Organization和即存的Azure AD配合使用
+@459 GitHub Actions to run a CI/CD pipeline，需求是构建短期密钥管理。用Create IAM OpenID Connect(OIDC)身份提供(IdP) in AWS IAM.因为是外部调用WebIdentity，所以要sts:AssumeRoleWithWebIdentity API call
+
+- Ch7.AWS Directory Services
+//TODO
 
 
-- AWS Directory Services
 
 - AWS Organizations
 Question #29, #31, #34, #38, #64, #79, #88
@@ -72,6 +75,7 @@ Question #3, #32, #44, #57, #66
 
 - AWS IAM Identity Center
 Question #21, #70
+@261
 
 - AWS Control Tower
 Question #64
