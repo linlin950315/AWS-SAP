@@ -59,8 +59,18 @@ Custom Identity Broker、OpenID Connect即 OIDC(Google 登录)
 @261 创建Organization和即存的Azure AD配合使用
 @459 GitHub Actions to run a CI/CD pipeline，需求是构建短期密钥管理。用Create IAM OpenID Connect(OIDC)身份提供(IdP) in AWS IAM.因为是外部调用WebIdentity，所以要sts:AssumeRoleWithWebIdentity API call
 
-- Ch7.AWS Directory Services
-//TODO
+- Ch7.AWS Directory Services(AD)
+Microsoft Active Directory（AD） 和 AWS Directory Service 的考察;与本地 AD 的集成
+Active Directory(AD)作用：集中式身份认证和权限管理。
+
+-- AWS Managed Microsoft AD:托管完整 Microsoft AD。与 SQL Server 集成。与本地AD建立Forest Trust
+@319为托管在VPC的EC2 Windows实例提供安全的远程桌面连接。选项的方案都能实现，但都需要额外的产品配置成本高。用AWS Systems Manager Fleet Manager是个无代理的解决方案，减少了额外的基础设施成本。//TODO
+
+-- AD Connecter:是代理。仅转发身份验证请求到本地AD。不在云中维护AD。只使用现有AD身份验证
+-- Simple AD:是托管。小规模，成本优先，或测试用途。不缓存目录数据
+-- 网络可能中断:不选 AD Connector
+
+
 
 
 
@@ -76,6 +86,7 @@ Question #3, #32, #44, #57, #66
 - AWS IAM Identity Center
 Question #21, #70
 @261
+@319
 
 - AWS Control Tower
 Question #64
