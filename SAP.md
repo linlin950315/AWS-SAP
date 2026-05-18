@@ -64,15 +64,18 @@ Microsoft Active Directory（AD） 和 AWS Directory Service 的考察;与本地
 Active Directory(AD)作用：集中式身份认证和权限管理。
 
 -- AWS Managed Microsoft AD:托管完整 Microsoft AD。与 SQL Server 集成。与本地AD建立Forest Trust
-@319为托管在VPC的EC2 Windows实例提供安全的远程桌面连接。选项的方案都能实现，但都需要额外的产品配置成本高。用AWS Systems Manager Fleet Manager是个无代理的解决方案，减少了额外的基础设施成本。//TODO
+@319 为托管在VPC的EC2 Windows实例提供安全的远程桌面连接。选项的方案都能实现，但都需要额外的产品配置成本高。用AWS Systems Manager Fleet Manager是个无代理的解决方案，减少了额外的基础设施成本。
+@326 要求所有 Windows EC2 实例加入到 AWS 上的 Active Directory，加MFA，想尽可能用AWS托管服务。用AWS Directory Services for Microsoft,Ec2.用Ec2做安全配置
 
--- AD Connecter:是代理。仅转发身份验证请求到本地AD。不在云中维护AD。只使用现有AD身份验证
+-- AD Connecter:轻量级代理。仅转发身份验证请求到本地AD。不在云中维护AD。只使用现有AD身份验证
+@70 要用现有Active Directory凭据访问控制台。正在用AWS IAM Identity Center (AWS Single Sign-On)。要低成本。用创建组织，启用所有功能+AD Connector
+@ 402 备灾，以便意外时将员工转移到远程环境。Win和Linux环境。要用本地Active Directory现有身份和MFA，复制现有桌面体验。用Amazon Workspace和AD Connector。配置RADIUS用于MFA
+@476 在Ec2上运行Active Directory Domain Service(AD DS).要通过VPN访问VPC,VPN要用MFA。
+可用AWS Client VPN endpoint和AD Connector
+
 -- Simple AD:是托管。小规模，成本优先，或测试用途。不缓存目录数据
+
 -- 网络可能中断:不选 AD Connector
-
-
-
-
 
 - AWS Organizations
 Question #29, #31, #34, #38, #64, #79, #88
