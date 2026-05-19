@@ -77,14 +77,27 @@ Active Directory(AD)作用：集中式身份认证和权限管理。
 
 -- 网络可能中断:不选 AD Connector
 
-- AWS Organizations
+- Ch8.AWS Organizations
 Question #29, #31, #34, #38, #64, #79, #88
---OrganizationAccountAccessRole @246 @367@391@480管理账户assume the IAM role，成员账户OrganizationAccountAccessRole IAM role
+-- OrganizationAccountAccessRole @246 @367@391@480跨账户管理assume the IAM role，成员账户OrganizationAccountAccessRole IAM role
+--  AWS CloudFormation StackSets:是AWS CloudFormation的一项功能，扩展了标准模板的能力，允许您在多个AWS账户和区域中，通过单次操作来部署和管理一组一致的CloudFormation堆栈。即跨区跨户，组织加集（Organizations+StackSets）
+@38 要使用 AWS CloudFormation StackSets将资源（SNS主题）部署到 AWS 组织下的所有成员账户。
+要管理账户车创建StackSets，CloudFormationStackSets 自动部署。
+@84 跨多个AWS账户和多个区域的基础设施即代码部署。用Organizations 和 AWS CloudFormation StackSets。从一个拥有必要IAM权限的账户部署CloudFormation模板。
 
-- Service Control Policies (SCP)
+@29 托管VPC，Ec2。已使用Key“costCenter”，Value“compliance”标记相关资源，希望识别Ec2上的安全工具成本。应在管理账户中激活costCenter用户定义标签，将数据保存S3
+@34 企业有一个为每个team都建了一个OU，每个OU下都有数个AWS账户。应从管理账户创建CUR(Cost and Usage Report)
+@79 整合多个账户(来自收购公司，不同计费的账户)的成本数据。用AWS Cost and Usage Report生成数据，自定义tag和成本类别。用Athena DB和QuickSight dataset（报告工具）做分析和可视化。
+@88 Organizations架构下，为各业务部门提供独立的月度报告和预算超支通知。应在管理账户用AWS Budgets，Cost Explorer，SNS。
+TODO：@98
+
+
+- Ch9. Service Control Policies (SCP)
 @309(多)@464
 SCP的作用是限制权限,只能“拒绝”操作。把希望允许的用户排除在SCP之外就可以。
 Question #3, #32, #44, #57, #66
+-- SCP的继承性
+@3 SCP的继承规则：子OU的SCP会覆盖父OU的SCP，但根目录的SCP会影响所有OU和账户。因此，需要创建一个临时环境来授予新账户特定权限，同时确保根目录的全局拒绝策略最终能应用到这些账户上。
 
 - AWS IAM Identity Center
 Question #21, #70
@@ -314,6 +327,7 @@ Question #74
 ### Data Query & Visualization
 
 - Amazon Athena
+Athena是连接原始数据（CUR）和可视化工具（如QuickSight）的桥梁。
 - Amazon QuickSight
 
 ### Architecture
