@@ -79,17 +79,28 @@ Active Directory(AD)作用：集中式身份认证和权限管理。
 
 - Ch8.AWS Organizations
 Question #29, #31, #34, #38, #64, #79, #88
--- OrganizationAccountAccessRole @246 @367@391@480跨账户管理assume the IAM role，成员账户OrganizationAccountAccessRole IAM role
+-- OrganizationAccountAccessRole IAM role@246 @367@391@480 跨账户管理assume the IAM role。成员账户中创建，授予管理账户权限以承担IAM角色
 --  AWS CloudFormation StackSets:是AWS CloudFormation的一项功能，扩展了标准模板的能力，允许您在多个AWS账户和区域中，通过单次操作来部署和管理一组一致的CloudFormation堆栈。即跨区跨户，组织加集（Organizations+StackSets）
 @38 要使用 AWS CloudFormation StackSets将资源（SNS主题）部署到 AWS 组织下的所有成员账户。
 要管理账户车创建StackSets，CloudFormationStackSets 自动部署。
 @84 跨多个AWS账户和多个区域的基础设施即代码部署。用Organizations 和 AWS CloudFormation StackSets。从一个拥有必要IAM权限的账户部署CloudFormation模板。
-
+--  账单预算相关
 @29 托管VPC，Ec2。已使用Key“costCenter”，Value“compliance”标记相关资源，希望识别Ec2上的安全工具成本。应在管理账户中激活costCenter用户定义标签，将数据保存S3
 @34 企业有一个为每个team都建了一个OU，每个OU下都有数个AWS账户。应从管理账户创建CUR(Cost and Usage Report)
 @79 整合多个账户(来自收购公司，不同计费的账户)的成本数据。用AWS Cost and Usage Report生成数据，自定义tag和成本类别。用Athena DB和QuickSight dataset（报告工具）做分析和可视化。
 @88 Organizations架构下，为各业务部门提供独立的月度报告和预算超支通知。应在管理账户用AWS Budgets，Cost Explorer，SNS。
-TODO：@98
+@108 每个部门都有自己的OU，合并计费。HR要加新系统放在新Reserviced Instance，希望确保其他部门不能共享RI折扣。
+应在AWS Billing and Cost Management consol，用组织的管理账户关闭人力资源部门生产AWS账户的RI共享。
+@225 有Organizations Amazon EC2、AWS Fargate、AWS Lambda，设计优化成本方案。
+要通过管理账户在组织级别购买 Compute Savings Plan，使用管理账户级别的推荐。
+@226 Organizations，分配每日预算，跟踪成本并提供通知。应在管理账户中用Budget，SNS
+@不明 AWS Organizations标记策略。用于标准化跨组织账户的资源标记。它可以强制要求资源必须包含特定标签（如CostCenter， Project），并可以定义标签的允许值，实现标记合规性的集中管理
+公司希望将特定成员账户限制在某些AWS区域。应将特定成员账户与一个新OU关联。应用标记策略和使用条件限制区域的SCP。
+@334 不同AWS账户内不同的合规要求，与现有的本地 Active Directory Federation Services (AD FS) 服务器集成。
+用Control Tower，加OU，连接IAM与本地AD FS。
+@377 公司希望提高对各个部门账单的可见性。公司在选择计算资源时不想失去操作灵活性。这里不能选带SCP的。要选合并账单，Compute Savings Plans支持“保持操作灵活性”的需求。
+@265 TODO:
+将所有开发者账户迁移到新的开发者组织。先通过管理账户将开发者移除。创建新组织，将现有账户加入新组织。
 
 
 - Ch9. Service Control Policies (SCP)
@@ -103,6 +114,7 @@ Question #3, #32, #44, #57, #66
 Question #21, #70
 @261
 @319
+@294
 
 - AWS Control Tower
 Question #64
