@@ -99,8 +99,16 @@ Question #29, #31, #34, #38, #64, #79, #88
 @334 不同AWS账户内不同的合规要求，与现有的本地 Active Directory Federation Services (AD FS) 服务器集成。
 用Control Tower，加OU，连接IAM与本地AD FS。
 @377 公司希望提高对各个部门账单的可见性。公司在选择计算资源时不想失去操作灵活性。这里不能选带SCP的。要选合并账单，Compute Savings Plans支持“保持操作灵活性”的需求。
-@265 TODO:
-将所有开发者账户迁移到新的开发者组织。先通过管理账户将开发者移除。创建新组织，将现有账户加入新组织。
+@265 将所有开发者账户迁移到新的开发者组织。
+先通过管理账户将开发者移除。创建新组织，将现有账户加入新组织。
+从新组管理账户中调InviteAccountToOrganization，向开发账户发送邀请。
+让开发人员登账户，确认加入新组。
+@373 限制一些DevOps团队不使用的AWS服务的访问权限- 用Access Advisor确定最近使用的服务
+拒绝特定的服务- 用Deny
+所有账户都在Organizations内，将多个账户作为单一单元- 定义organizational units(OUs)，并将成员账户放OUs中
+@379 IT将需要新账户。财务要集中的支付方法，但每个组支出的可见。安全团队要集中控制所有IAM使用。用Organizations，启用所有功能，Service Control来filter IAM权限
+@441 所有业务线(LOB)生成单一AWS发票，每个业务线的费用独立计费，可以限制每个业务线的权限，每个业务线自己有完整的管理权限。
+用Organization创建单一组织。SCP，允许仅使用批准的服务和功能，然后将策略应用到业务线账户。
 
 
 - Ch9. Service Control Policies (SCP)
