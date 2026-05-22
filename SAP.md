@@ -111,12 +111,24 @@ Question #29, #31, #34, #38, #64, #79, #88
 用Organization创建单一组织。SCP，允许仅使用批准的服务和功能，然后将策略应用到业务线账户。
 
 
-- Ch9. Service Control Policies (SCP)
+- Ch9. Service Control Policies (SCP) 用于权限限制 Question #3, #32, #44, #57, #66
 @309(多)@464
-SCP的作用是限制权限,只能“拒绝”操作。把希望允许的用户排除在SCP之外就可以。
-Question #3, #32, #44, #57, #66
--- SCP的继承性
-@3 SCP的继承规则：子OU的SCP会覆盖父OU的SCP，但根目录的SCP会影响所有OU和账户。因此，需要创建一个临时环境来授予新账户特定权限，同时确保根目录的全局拒绝策略最终能应用到这些账户上。
+SCP的作用是限制权限,只能“拒绝”操作。把希望允许的用户排除在SCP之外就可以。显式拒绝
+-- SCP的继承性：需要逐层允许 Root→OU→Account
+@3 继承规则：SCP 是从 Root → OU → 子OU → Account 
+创建临时环境来授予新Config，移动根目录的SCP到目标OU（如Production OU），而不是仅仅创建临时OU。记住“移策”这个动作。
+收购新账号，先进 Onboarding
+→ 调整Config或其他
+→ 再进 Production
+//TODO @3之后的
+
+⚠️ 易错点
+-- Tag Policy:AWS Organizations Tag Policies  用于治理和审计
+
+-- Backup Policy:通过 Organizations 统一管理备份策略。
+-- AI Opt-Out Policy:禁止客户数据用于AI模型训练
+
+
 
 - AWS IAM Identity Center
 Question #21, #70
