@@ -1,9 +1,9 @@
 ## Identit & Federation
 
-- Ch3.IAM 最小限度允许访问，有各种策略
+- Ch3.IAM 最小限度允许访问，有各种策略。作用域单个账户内的用户或角色
 IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像临时通行证，比如访客证或某个会议室的临时权限（临时凭证）。
 策略policy就是写在工牌或通行证上的权限说明，比如“可进入A栋，但不可进入机房”。权限边界SCP就像给你的权限加了个“天花板”，你再怎么申请，也不能超过这个范围。
-
+@245(多) 财务希望跟踪所有账单。创建新账户做管理账户，管理账户创建IAM角色，附权限。允许财务team假设该角色
 -- AdministratorAccess
 "Effect": "Allow",
 "Action": "*",是允许所有操作
@@ -21,7 +21,10 @@ IAM用户就像正式员工，有长期工牌（长期凭证）。IAM角色像�
 需要允A中的IAM用户来假设B中的角色。
 就要在B配置信任策略允许A操作，A配身份策略sts:AssumeRole
 @343
-@351 IAM police还可以限制EC2的启动类型(t3.small) EC2区域(us-east-2 Region)
+@351 不在Organizations，就无法使用SCP策略。此时需权限控制的话，IAM可以精确控制特定用户/角色在特定区域的资源操作。
+@112 需要限制开发者只能启动的实例类型，应创建一个新的IAM策略。指定允许的实例类型，将策略附加到包含开发者IAM账户的IAM组。
+
+
 
 -- IAM Permission Boundaries设权限边界
 
@@ -111,30 +114,37 @@ Question #29, #31, #34, #38, #64, #79, #88
 用Organization创建单一组织。SCP，允许仅使用批准的服务和功能，然后将策略应用到业务线账户。
 
 
-- Ch9. Service Control Policies (SCP) 用于权限限制 Question #3, #32, #44, #57, #66
-@309(多)@464
-SCP的作用是限制权限,只能“拒绝”操作。把希望允许的用户排除在SCP之外就可以。显式拒绝
+- Ch9. Service Control Policies (SCP) 用于权限限制，作用于组织 Question #3, #32, #44, #57, #66
+-- 将特定账户放入一个独立的组织单位（OU），然后在该OU上附加SCP和标记策略，是实现精细化、集中化、最小化配置管理的最佳实践。
+@309(多) @464 @44 @286 @328(三个选项都是Control Tower但不能选) @410 @66 @245
+-- SCP的作用是限制权限,只能“拒绝”操作。把希望允许的用户排除在SCP之外就可以。显式拒绝@282
 -- SCP的继承性：需要逐层允许 Root→OU→Account
-@3 继承规则：SCP 是从 Root → OU → 子OU → Account 
+@3 @364 继承规则：SCP 是从 Root → OU → 子OU → Account
 创建临时环境来授予新Config，移动根目录的SCP到目标OU（如Production OU），而不是仅仅创建临时OU。记住“移策”这个动作。
 收购新账号，先进 Onboarding
 → 调整Config或其他
 → 再进 Production
-//TODO @3之后的
+@31 共享账户
+@32 默认 Organization会默认账户继承FullAWSAccess的SCP，即默认允许所有 AWS 服务。
+@57 @294 优先级：SCP > IAM权限 > IAM角色 > IAM用户　SCP设对了但还有问题，可能是IAM设置问题
+@270 Control Tower提供了集中化管理的能力，可以创建组织单元（OUs）并附加SCP（Service Control Policies），从而实现跨账户的区域限制。但他无法完全自定义规则
 
-⚠️ 易错点
--- Tag Policy:AWS Organizations Tag Policies  用于治理和审计
-
+-- Tag Policy:AWS Organizations Tag Policies  用于治理和审计 @282 @113(多)
 -- Backup Policy:通过 Organizations 统一管理备份策略。
 -- AI Opt-Out Policy:禁止客户数据用于AI模型训练
+-- AWS Config持续监控AWS资源配置，并与定义配置规则进行比较要。“检查”才用 Config @113(多)
 
 
+- Ch10. AWS IAM Identity Center(多个AWS账户和app提供统一登录入口)
+-- 用户实际上是在“假设角色（Assume Role）”进入成员账户。
 
-- AWS IAM Identity Center
+-- Permission Set（权限集）
+
 Question #21, #70
 @261
 @319
-@294
+
+
 
 - AWS Control Tower
 Question #64
