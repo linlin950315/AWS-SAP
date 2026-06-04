@@ -54,8 +54,9 @@ Federation集中管理企业身份,不创建用户。允许“不在 AWS 账户�
 目前推荐使用 SAML(企业AD集成) 或 Amazon Cognito
 可用方法：SAML企业内部、Amazon Cognito(内部调用 STS,用token，移动App，匿名用户)+
 Custom Identity Broker、OpenID Connect即 OIDC(Google 登录)
+@371 让AWS Directory Service for Microsoft Active Directory（托管AD）中的所有用户都能访问位于ALB后面的Web应用。这意味着需要一个能直接与该托管AD集成，并支持SAML协议进行单点登录（SSO）的解决方案。应该EC2 ←→ AD ←→ Cognito ←→ ALB ←→ User 选带Cognito的 
 @385 一个开发单元的成员终止了属于另一个开发单元的EC2实例。用SAML的Session Tag标签管理身份认证，再更新IAM角色和策略
-@411 外部用户从互联网访问程序。要通过MFA访问部署在容器的docker中。要用Amazon Cognito建用户池。
+@411 只允许外部特定用户从互联网访问程序，需要MFA身份验证，程序部署在docker中。要用Amazon Cognito建用户池。
 @517 用token保护API Gateway和后面的AWS Lambda
 @418 用OIDC(IdP)提供用户管理，JWT Token保护ALB和API Gateway HTTP API。但发现ALB接受来自未经身份验证的用户请求。
 应该配置即存的ALB，integrating the ALB with the IdP集成IdP和ALB。
@@ -133,12 +134,15 @@ Question #29, #31, #34, #38, #64, #79, #88
 -- Backup Policy:通过 Organizations 统一管理备份策略。
 -- AI Opt-Out Policy:禁止客户数据用于AI模型训练
 -- AWS Config持续监控AWS资源配置，并与定义配置规则进行比较要。“检查”才用 Config @113(多)
-
+//TODO: 70
 
 - Ch10. AWS IAM Identity Center(多个AWS账户和app提供统一登录入口)
--- 用户实际上是在“假设角色（Assume Role）”进入成员账户。
+-- 用户实际上是在“假设角色（Assume Role）”进入成员账户。 登录后 = 自动 AssumeRole
+-- ABAC: Attribute-Based Access Control（基于属性的访问权限控制）即你不需要修改权限集，只需要修改用户属性。
+-- 支持 SAML 2.0集成的第三方应用:Salesforce,NetSuite,Microsoft 365 @21
+-- Permission Set（权限集） 一个或多个IAM Policy的集合。有只读权限和AdministratorAccess
+-- AWS IAM Identity Center可以通过AD Connector与内部Active Directory集成，满足集中用户管理需求
 
--- Permission Set（权限集）
 
 Question #21, #70
 @261
