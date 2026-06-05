@@ -57,10 +57,10 @@ Custom Identity Broker、OpenID Connect即 OIDC(Google 登录)
 @371 让AWS Directory Service for Microsoft Active Directory（托管AD）中的所有用户都能访问位于ALB后面的Web应用。这意味着需要一个能直接与该托管AD集成，并支持SAML协议进行单点登录（SSO）的解决方案。应该EC2 ←→ AD ←→ Cognito ←→ ALB ←→ User 选带Cognito的 
 @385 一个开发单元的成员终止了属于另一个开发单元的EC2实例。用SAML的Session Tag标签管理身份认证，再更新IAM角色和策略
 @411 只允许外部特定用户从互联网访问程序，需要MFA身份验证，程序部署在docker中。要用Amazon Cognito建用户池。
-@517 用token保护API Gateway和后面的AWS Lambda
+@517 要求用现有的第三方身份提供者和OAuth，为调用API Gateway的Web应用实现用户授权。可直接将第三方身份提供与API Gateway集成，token保护API Gateway和后面的AWS Lambda
 @418 用OIDC(IdP)提供用户管理，JWT Token保护ALB和API Gateway HTTP API。但发现ALB接受来自未经身份验证的用户请求。
 应该配置即存的ALB，integrating the ALB with the IdP集成IdP和ALB。
-@261 创建Organization和即存的Azure AD配合使用
+@261(多) 要实现集中计费和管理、实现身份联合（使用临时凭证）、利用现有Azure AD。应该创建Organization和即存的Azure AD配合使用
 @459 GitHub Actions to run a CI/CD pipeline，需求是构建短期密钥管理。用Create IAM OpenID Connect(OIDC)身份提供(IdP) in AWS IAM.因为是外部调用WebIdentity，所以要sts:AssumeRoleWithWebIdentity API call
 
 - Ch7.AWS Directory Services(AD)
@@ -72,7 +72,7 @@ Active Directory(AD)作用：集中式身份认证和权限管理。
 @326 要求所有 Windows EC2 实例加入到 AWS 上的 Active Directory，加MFA，想尽可能用AWS托管服务。用AWS Directory Services for Microsoft,Ec2.用Ec2做安全配置
 
 -- AD Connecter:轻量级代理。仅转发身份验证请求到本地AD。不在云中维护AD。只使用现有AD身份验证
-@70 要用现有Active Directory凭据访问控制台。正在用AWS IAM Identity Center (AWS Single Sign-On)。要低成本。用创建组织，启用所有功能+AD Connector
+@70 要用现有Active Directory凭据访问控制台。正在用AWS IAM Identity Center (AWS Single Sign-On)。要低成本。应创建Organization并启用组织所有功能，+AD Connector
 @ 402 备灾，以便意外时将员工转移到远程环境。Win和Linux环境。要用本地Active Directory现有身份和MFA，复制现有桌面体验。用Amazon Workspace和AD Connector。配置RADIUS用于MFA
 @476 在Ec2上运行Active Directory Domain Service(AD DS).要通过VPN访问VPC,VPN要用MFA。
 可用AWS Client VPN endpoint和AD Connector
@@ -134,16 +134,19 @@ Question #29, #31, #34, #38, #64, #79, #88
 -- Backup Policy:通过 Organizations 统一管理备份策略。
 -- AI Opt-Out Policy:禁止客户数据用于AI模型训练
 -- AWS Config持续监控AWS资源配置，并与定义配置规则进行比较要。“检查”才用 Config @113(多)
-//TODO: 70
+
 
 - Ch10. AWS IAM Identity Center(多个AWS账户和app提供统一登录入口)
 -- 用户实际上是在“假设角色（Assume Role）”进入成员账户。 登录后 = 自动 AssumeRole
 -- ABAC: Attribute-Based Access Control（基于属性的访问权限控制）即你不需要修改权限集，只需要修改用户属性。
 -- 支持 SAML 2.0集成的第三方应用:Salesforce,NetSuite,Microsoft 365 @21
--- Permission Set（权限集） 一个或多个IAM Policy的集合。有只读权限和AdministratorAccess
+-- Permission Set（权限集） 一个或多个IAM Policy的集合。有只读权限和AdministratorAccess@261(多)
 -- AWS IAM Identity Center可以通过AD Connector与内部Active Directory集成，满足集中用户管理需求
 
-
+@261(多) 要实现集中计费和管理、实现身份联合（使用临时凭证）、利用现有Azure AD。应该首先，建立一个管理账户和Organization实现集中计费。
+其次，现有的Azure AD连接AWS IAM Identity Center（原SSO），实现身份联合和临时凭证
+最后，在IAM Identity Center中通过权限集(permission sets)来定义和分配访问权限
+//TODO: 510 
 Question #21, #70
 @261
 @319
